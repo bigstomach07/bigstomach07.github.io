@@ -1,5 +1,5 @@
 body {
-    font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
     margin: auto;
     display: grid;
     grid-template-rows: auto 1fr auto;
