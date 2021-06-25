@@ -155,13 +155,13 @@ function clearCompletedTodoList() {
 function sortTodoListByDDL() {
   const msgs = getMsgs();
   const sorted = msgs.sort((a, b) => {
-    let x = a.ddl, y = b.ddl;
-    if (x == '') return -1;
-    if (y == '') return 1;
-    const aDate = new Date(x);
-    const bDate = new Date(y);
+    if (a.ddl == '' || a.status == 'Completed') return -1;
+    if (b.ddl == '' || b.status == 'Completed') return 1;
+    const aDate = new Date(a.ddl);
+    const bDate = new Date(b.ddl);
     return bDate - aDate;
   })
+  console.log(sorted)
   localStorage.setItem('todo-list', JSON.stringify(sorted));
   renderlist();
 }
@@ -171,23 +171,22 @@ function switchNavbarDropdown() {
   $('.navbar .dropdown').classList.toggle('show');
 }
 
-window.ontouchend = function (e) {
+window.onclick = window.ontouchend = function (e) {
   if (!e.target.matches('.navbar .icon')) {
     $('.navbar .dropdown').classList.remove('show');
   }
   if (e.target.matches('.modal')) {
     $$('.modal').forEach(x => x.classList.remove('show'));
   }
-
 }
 
 
 window.onload = function init() {
   $('.navbar .icon').addEventListener('click', switchNavbarDropdown);
-  $('.complete-all').addEventListener('click', completeAllTodoList);
-  $('.cancel-all').addEventListener('click', cancelAllTodoList);
-  $('.clear-completed').addEventListener('click', clearCompletedTodoList);
-  $('.sort-by-ddl').addEventListener('click', sortTodoListByDDL);
+  $('.complete-all').addEventListener('touchend', completeAllTodoList);
+  $('.cancel-all').addEventListener('touchend', cancelAllTodoList);
+  $('.clear-completed').addEventListener('touchend', clearCompletedTodoList);
+  $('.sort-by-ddl').addEventListener('touchend', sortTodoListByDDL);
 
   $('.button-add').addEventListener('click', function () {
     $('#editModal').classList.toggle('show');
@@ -224,4 +223,3 @@ window.onload = function init() {
   renderlist();
 }
 
-document.body.addEventListener('touchstart', function(e) {e.preventDefault();}, false)
