@@ -303,7 +303,7 @@ input[type="checkbox"]:checked+label:after {
     height: 100px;
     width: 100px;
     font-size: 80px;
-    border-radius: 100px;
+    border-radius: 50px;
     margin-bottom: 20px;
 }
 
