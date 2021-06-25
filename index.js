@@ -155,6 +155,8 @@ function clearCompletedTodoList() {
 function sortTodoListByDDL() {
   const msgs = getMsgs();
   const sorted = msgs.sort((a, b) => {
+    if (a.ddl == '' && b.status == 'Completed') return 1;
+    if (b.ddl == '' && a.status == 'Completed') return -1;
     if (a.ddl == '' || a.status == 'Completed') return -1;
     if (b.ddl == '' || b.status == 'Completed') return 1;
     const aDate = new Date(a.ddl);
