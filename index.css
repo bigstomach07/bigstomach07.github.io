@@ -3,6 +3,7 @@ body {
     margin: auto;
     display: grid;
     grid-template-rows: auto 1fr auto;
+    overflow:auto;
 }
 
 h1 {
@@ -68,6 +69,10 @@ input[type=text],input[type="datetime-local"],input[type=search] {
     border-radius: 4px;
 }
 
+input[type=search] {
+    -webkit-appearance: none;
+}
+
 ul {   
     list-style-type: none;
     margin: 0;   
@@ -103,7 +108,7 @@ ul {
 
 .todo-list li .destroy {
     color: cornflowerblue;
-    font-size: 1.875em;
+    font-size: 1.5em;
     border-width: 0;
     position: absolute;
     top: 0;
@@ -111,6 +116,7 @@ ul {
     bottom: 0;
     margin: auto 0;
     background-color: transparent;
+    text-align: center;
 }
 
 .todo-list li .edit {
@@ -123,11 +129,12 @@ ul {
     bottom: 0;
     margin: auto 0;
     background-color: transparent;
+    text-align: center;
 }
 
 .todo-list li .top {
     color: cornflowerblue;
-    font-size: 1.125em;
+    font-size: 1.5em;
     border-width: 0;
     position: absolute;
     top: 0;
@@ -135,6 +142,7 @@ ul {
     bottom: 0;
     margin: auto 0;
     background-color: transparent;
+    text-align: center;
 }
 
 input[type="checkbox"] {
@@ -296,15 +304,25 @@ input[type="checkbox"]:checked+label:after {
     text-align: center;
 }
 
+.footer-wrap {
+    height: 120px;
+}
+
 .button-add {
     background-color: cornflowerblue;
     color: white;
     height: 100px;
     width: 100px;
-    font-size: 80px;
     border-radius: 50%;
     margin-bottom: 20px;
     border: none;
+}
+
+.button-add span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 70px;
 }
 
 .show {
