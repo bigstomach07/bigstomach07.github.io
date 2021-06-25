@@ -14,7 +14,8 @@ function getDdl(ddl) {
   if (!ddl) return '';
   const ddlTime = new Date(ddl);
   const nowTime = new Date();
-  return `&#9200; ${Math.ceil((ddlTime - nowTime) / (86400 * 1000))} days`
+  if (ddlTime < nowTime) return '⏰ Expired'
+  return `⏰ ${Math.ceil((ddlTime - nowTime) / (86400 * 1000))} days`
 }
 
 function renderlist() {
@@ -25,9 +26,8 @@ function renderlist() {
   let msgs = getMsgs();
   let count = 0;
   let found = 0;
-  if (msgs == null) return;
 
-  for (let i = 0; i < msgs.length; ++i) {
+  for (let i = 0; msgs && i < msgs.length; ++i) {
     const msg = msgs[i].msg;
     const status = msgs[i].status;
     const ddl = msgs[i].ddl;
@@ -44,9 +44,9 @@ function renderlist() {
             <label class="todo-label">${msg}</label>
             <label class="todo-ddl">${status != 'Completed' ? getDdl(ddl) : ''}</label>
           </div>
-          <button class="top">&#8679;</button>
-          <button class="edit">&#9998;</button>
-          <button class="destroy">&times;</button>
+          <button class="top">⬆️</button>
+          <button class="edit">✏️</button>
+          <button class="destroy">🗑</button>
         </div>`
 
       if (status == 'Completed') {
@@ -64,18 +64,22 @@ function renderlist() {
         renderlist();
       });
       //top item
-      item.querySelector('.top').addEventListener('touchend', function () {
+      item.querySelector('.top').addEventListener('click', function () {
         select_msgs = msgs.splice(i, 1);
         msgs = msgs.concat(select_msgs);
         localStorage.setItem('todo-list', JSON.stringify(msgs));
         renderlist();
       });
       //edit item
-      item.querySelector('.edit').addEventListener('touchend', function () {
+      item.querySelector('.edit').addEventListener('click', function () {
         $('#editModal').classList.toggle('show');
         $('#modal-edit-todo').value = msgs[i].msg;
         $('#modal-edit-ddl').value = msgs[i].ddl;
-        $('.modal-button').ontouchend = function () {
+        $('.modal-button').onclick = function () {
+          if (!$('#modal-edit-todo').value) {
+            alert('Empty TODO!');
+            return;
+          }
           msgs[i].msg = $('#modal-edit-todo').value;
           msgs[i].ddl = $('#modal-edit-ddl').value;
           localStorage.setItem('todo-list', JSON.stringify(msgs));
@@ -84,9 +88,9 @@ function renderlist() {
         }
       });
       //remove item
-      item.querySelector('.destroy').addEventListener('touchend', function () {
+      item.querySelector('.destroy').addEventListener('click', function () {
         $('#deleteModal').classList.toggle('show');
-        $('.modal-button-warn').ontouchend = function () {
+        $('.modal-button-warn').onclick = function () {
           msgs.splice(i, 1);
           localStorage.setItem('todo-list', JSON.stringify(msgs));
           $('#deleteModal').classList.remove('show');
@@ -179,17 +183,21 @@ window.ontouchend = function (e) {
 
 
 window.onload = function init() {
-  $('.navbar .icon').addEventListener('touchend', switchNavbarDropdown);
-  $('.complete-all').addEventListener('touchend', completeAllTodoList);
-  $('.cancel-all').addEventListener('touchend', cancelAllTodoList);
-  $('.clear-completed').addEventListener('touchend', clearCompletedTodoList);
-  $('.sort-by-ddl').addEventListener('touchend', sortTodoListByDDL);
+  $('.navbar .icon').addEventListener('click', switchNavbarDropdown);
+  $('.complete-all').addEventListener('click', completeAllTodoList);
+  $('.cancel-all').addEventListener('click', cancelAllTodoList);
+  $('.clear-completed').addEventListener('click', clearCompletedTodoList);
+  $('.sort-by-ddl').addEventListener('click', sortTodoListByDDL);
 
-  $('.button-add').addEventListener('touchend', function () {
+  $('.button-add').addEventListener('click', function () {
     $('#editModal').classList.toggle('show');
     $('#modal-edit-todo').value = '';
     $('#modal-edit-ddl').value = undefined;
-    $('.modal-button').ontouchend = function () {
+    $('.modal-button').onclick = function () {
+      if (!$('#modal-edit-todo').value) {
+        alert('Empty TODO!');
+        return;
+      }
       addTodo($('#modal-edit-todo').value, $('#modal-edit-ddl').value);
       $('#editModal').classList.remove('show');
       renderlist();
@@ -204,7 +212,7 @@ window.onload = function init() {
   const filters = $$('.filters li a');
   for (let i = 0; i < filters.length; ++i) {
     (function (filter) {
-      filter.addEventListener('touchend', function () {
+      filter.addEventListener('click', function () {
         for (let j = 0; j < filters.length; ++j) {
           filters[j].classList.remove('selected');
         }
@@ -216,3 +224,4 @@ window.onload = function init() {
   renderlist();
 }
 
+document.body.addEventListener('touchstart', function(e) {e.preventDefault();}, false)
