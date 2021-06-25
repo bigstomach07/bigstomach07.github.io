@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1" name="viewport" />
+  <title>TodoMVC</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+  <div class="navbar">
+    <div class="dropdown-container">
+      <a href="#" class="icon">&#9776;</a>
+      <div id="dropdown" class="dropdown">
+        <a href="#" class="complete-all">Complete All</a>
+        <a href="#" class="cancel-all">Cancel All</a>
+        <a href="#" class="clear-completed">Clear Completed</a>
+        <a href="#" class="sort-by-ddl">Sort by DDL</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="todoapp">
+
+    <h1>Todos</h1>
+    <input class="search-todo" type="search" placeholder="Search TODO">
+
+    <section class="main">
+      <ul class="todo-list"></ul>
+
+      <footer class="footer">
+        <span class="todo-count"></span>
+        <ul class="filters">
+          <li><a class="selected">All</a></li>
+          <li><a class="">Active</a></li>
+          <li><a class="">Completed</a></li>
+        </ul>
+      </footer>
+    </section>
+  </div>
+
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <p class="modal-tip">Do you really want to delete this todo?</p>
+      <button class="modal-button-warn">Sure</button>
+    </div>
+  </div>
+
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-tip">
+        TODO Goes Here
+        <input class="modal-input" id="modal-edit-todo" type="text"/>
+        Deadline
+        <input class="modal-input" id="modal-edit-ddl" type="datetime-local"/>
+      </div>
+      
+      <button class="modal-button">Done</button>
+    </div>
+  </div>
+
+  <div class="footer-add">
+    <button class="button-add">+</button>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
